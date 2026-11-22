@@ -1,53 +1,59 @@
-const areEqual = function (a, b, c) {
+const areAllEqual = function (a, b, c) {
   if (!a || !b || !c) {
     return false;
   }
 
-  return a === b && b === c && a === c;
+  return a === b && b === c;
 };
 
 const isGameOver = function (board) {
-  rowMatches(board);
-  colMatches(board);
-  diagonalMatches(board);
-  isBoardFilled(board);
+  if (
+    checkRowMatches(board) ||
+    checkColMatches(board) ||
+    checkDiagonalMatches(board)
+  ) {
+    console.log("Game Over with a winner");
+
+    return true;
+  }
+
+  if (isBoardFilled(board)) {
+    console.log("Draw");
+    return true;
+  }
+
+  return false;
 };
 
-const rowMatches = function (board) {
-  if (areEqual(board[0][0], board[0][1], board[0][2])) {
-    console.log("Game Over");
+const checkRowMatches = function (board) {
+  for (let row = 0; row < board.length; row++) {
+    if (areAllEqual(board[row][0], board[row][1], board[row][2])) {
+      return true;
+    }
   }
 
-  if (areEqual(board[1][0], board[1][1], board[1][2])) {
-    console.log("Game Over");
-  }
-
-  if (areEqual(board[2][0], board[2][1], board[2][2])) {
-    console.log("Game Over");
-  }
+  return false;
 };
 
-const colMatches = function (board) {
-  if (areEqual(board[0][0], board[1][0], board[2][0])) {
-    console.log("Game Over");
+const checkColMatches = function (board) {
+  for (let col = 0; col < board.length; col++) {
+    if (areAllEqual(board[0][col], board[1][col], board[2][col])) {
+      return true;
+    }
   }
 
-  if (areEqual(board[0][1], board[1][1], board[2][1])) {
-    console.log("Game Over");
-  }
-
-  if (areEqual(board[0][2], board[1][2], board[2][2])) {
-    console.log("Game Over");
-  }
+  return false;
 };
 
-const diagonalMatches = function (board) {
-  if (areEqual(board[0][0], board[1][1], board[2][2])) {
-    console.log("Game Over");
+const checkDiagonalMatches = function (board) {
+  if (areAllEqual(board[0][0], board[1][1], board[2][2])) {
+    return true;
   }
-  if (areEqual(board[2][0], board[1][1], board[0][2])) {
-    console.log("Game Over");
+  if (areAllEqual(board[2][0], board[1][1], board[0][2])) {
+    return true;
   }
+
+  return false;
 };
 
 const isBoardFilled = function (board) {
@@ -58,7 +64,6 @@ const isBoardFilled = function (board) {
       }
     }
   }
-  console.log("Game Over");
 
   return true;
 };
