@@ -13,7 +13,6 @@ const isGameOver = function (board) {
     checkDiagonalMatches(board)
   ) {
     console.log("Game Over with a winner");
-
     return true;
   }
 
